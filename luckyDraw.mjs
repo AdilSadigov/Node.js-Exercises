@@ -5,26 +5,46 @@ function luckyDraw(player) {
         process.nextTick(() => {
             if (win) {
                 resolve(`${player} won a prize in the draw!`);
-            } 
-            else {
+            } else {
                 reject(new Error(`${player} lost the draw.`));
             }
         });
     });
 }
 
-let Joe = luckyDraw("Joe")
-let Caroline = luckyDraw("Caroline")
-let Sabrina = luckyDraw("Sabrina")
 
-Joe
-    .then ((result) => console.log(result))
-    .catch((error) => console.error(error))
+async function getResults() {
+    try {
+        const [Tina, Jorge, Juilen] = await Promise.allSettled([
+            luckyDraw("Tina"),
+            luckyDraw("Jorge"),
+            luckyDraw("Juilen")
+        ])
 
-Caroline
-    .then ((result) => console.log(result))
-    .catch((error) => console.error(error))
+        if (Tina.status === "fulfilled") {
+            console.log(Tina.value)
+        }
+        else {
+            console.error(Tina.reason)
+        }
 
-Sabrina
-    .then ((result) => console.log(result))
-    .catch((error) => console.error(error))
+        if (Jorge.status === "fulfilled") {
+            console.log(Jorge.value)
+        }
+        else {
+            console.error(Jorge.reason)
+        }
+
+        if (Juilen.status === "fulfilled") {
+            console.log(Juilen.value)
+        }
+        else {
+            console.error(Juilen.reason)
+        }
+    } 
+    catch (error) {
+        console.error(error)
+    }
+}
+
+getResults()

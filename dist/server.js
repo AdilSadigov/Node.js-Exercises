@@ -4,6 +4,8 @@ import "express-async-errors";
 import "dotenv/config";
 import { getAll, getOneById, create, updateById, deleteByID, createImage } from "./controllers/planets.js";
 import multer from 'multer';
+import * as dotenv from 'dotenv';
+dotenv.config();
 const app = express();
 const port = process.env.PORT;
 const storage = multer.diskStorage({

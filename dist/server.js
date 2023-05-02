@@ -3,8 +3,10 @@ import morgan from 'morgan';
 import "express-async-errors";
 import "dotenv/config";
 import { getAll, getOneById, create, updateById, deleteByID, createImage } from "./controllers/planets.js";
-import { logIn, singUp } from "./controllers/users.js";
+import { logIn, singUp, logOut } from "./controllers/users.js";
+import authorize from "./authorize.js";
 import multer from 'multer';
+import './passport.js';
 const app = express();
 const port = process.env.PORT;
 const storage = multer.diskStorage({
@@ -27,6 +29,7 @@ app.delete('/api/planets/:id', deleteByID);
 app.post('/api/planets/:id/image', upload.single("image"), createImage);
 app.post('/api/users/login', logIn);
 app.post('/api/users/singup', singUp);
+app.get('/api/users/logout', authorize, logOut);
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
